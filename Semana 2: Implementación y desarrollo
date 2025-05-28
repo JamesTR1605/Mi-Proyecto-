@@ -142,3 +142,78 @@ public:
         pilaMemoria.pop();
         cout << "Bloque de memoria #" << bloqueLiberated << " liberado exitosamente.\n";
     }
+
+ void mostrarEstado() {
+        if (pilaMemoria.empty()) {
+            cout << "\nNo hay bloques de memoria asignados.\n";
+            return;
+        }
+        
+        stack<int> temp = pilaMemoria;
+        cout << "\n=== Estado actual de la memoria ===\n";
+        cout << "Bloques asignados (del más reciente al más antiguo):\n";
+        while (!temp.empty()) {
+            cout << "Bloque #" << temp.top() << endl;
+            temp.pop();
+        }
+        cout << "Total de bloques asignados: " << pilaMemoria.size() << endl;
+        cout << "==================================\n";
+    }
+    
+    size_t bloquesAsignados() const {
+        return pilaMemoria.size();
+    }
+};
+
+// Función para mostrar menú
+void mostrarMenu() {
+    cout << "\n========== SIMULADOR DE SISTEMA OPERATIVO ==========\n";
+    cout << "1. Insertar proceso\n";
+    cout << "2. Eliminar proceso\n";
+    cout << "3. Buscar proceso\n";
+    cout << "4. Modificar prioridad\n";
+    cout << "5. Mostrar todos los procesos\n";
+    cout << "6. Encolar proceso para ejecución\n";
+    cout << "7. Ejecutar proceso\n";
+    cout << "8. Mostrar cola de ejecución\n";
+    cout << "9. Asignar memoria\n";
+    cout << "10. Liberar memoria\n";
+    cout << "11. Mostrar estado de memoria\n";
+    cout << "0. Salir\n";
+    cout << "===================================================\n";
+    cout << "Seleccione una opción: ";
+}
+
+int main() {
+    GestorProcesos gestor;
+    PlanificadorCPU planificador;
+    GestorMemoria memoria;
+    
+    int opcion;
+    do {
+        mostrarMenu();
+        cin >> opcion;
+        
+        switch(opcion) {
+            case 1: {
+                int id, prioridad;
+                string nombre;
+                cout << "\n--- Insertar Proceso ---\n";
+                cout << "ID del proceso: ";
+                cin >> id;
+                cout << "Nombre del proceso: ";
+                cin >> nombre;
+                cout << "Prioridad (1-10): ";
+                cin >> prioridad;
+                gestor.insertar(id, nombre, prioridad);
+                break;
+            }
+            case 2: {
+                int id;
+                cout << "\n--- Eliminar Proceso ---\n";
+                cout << "ID del proceso a eliminar: ";
+                cin >> id;
+                gestor.eliminar(id);
+                break;
+            }
+
