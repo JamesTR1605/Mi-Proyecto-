@@ -1,0 +1,16 @@
+void mostrarMenu() {
+    cout << "\n========== SIMULADOR DE SISTEMA OPERATIVO ==========\n";
+    cout << "1. Insertar proceso\n";
+    cout << "2. Eliminar proceso\n";
+    cout << "3. Buscar proceso\n";
+    cout << "4. Modificar prioridad\n";
+    cout << "5. Mostrar todos los procesos\n";
+    cout << "6. Encolar proceso para ejecución\n";
+    cout << "7. Ejecutar proceso\n";
+    cout << "8. Mostrar cola de ejecución\n";
+    cout << "9. Asignar memoria\n";
+    cout << "10. Liberar memoria\n";
+    cout << "11. Mostrar estado de memoria\n";
+    cout << "0. Salir\n";
+    cout << "===================================================\n";
+    cout << "Seleccione una opción: ";
