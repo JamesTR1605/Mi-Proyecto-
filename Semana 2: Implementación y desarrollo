@@ -1,1 +1,48 @@
+#include <iostream>
+#include <string>
+#include <stack>
 
+using namespace std;
+
+// Estructura de Proceso
+struct Proceso {
+    int id;
+    string nombre;
+    int prioridad;
+    Proceso* siguiente;
+    
+    // Constructor para facilitar la creación
+    Proceso(int _id, string _nombre, int _prioridad) 
+        : id(_id), nombre(_nombre), prioridad(_prioridad), siguiente(NULL) {}
+};
+
+// Lista enlazada para el Gestor de Procesos
+class GestorProcesos {
+private:
+    Proceso* cabeza;
+
+public:
+    // Constructor
+    GestorProcesos() : cabeza(NULL) {}
+    
+    // Destructor para liberar memoria
+    ~GestorProcesos() {
+        while (cabeza != NULL) {
+            Proceso* temp = cabeza;
+            cabeza = cabeza->siguiente;
+            delete temp;
+        }
+    }
+
+    void insertar(int id, string nombre, int prioridad) {
+        // Verificar si el ID ya existe
+        if (buscar(id) != NULL) {
+            cout << "Error: Ya existe un proceso con ID " << id << ".\n";
+            return;
+        }
+        
+        Proceso* nuevo = new Proceso(id, nombre, prioridad);
+        nuevo->siguiente = cabeza;
+        cabeza = nuevo;
+        cout << "Proceso insertado exitosamente.\n";
+    }
