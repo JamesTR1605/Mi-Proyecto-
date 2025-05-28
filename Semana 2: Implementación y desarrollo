@@ -46,3 +46,66 @@ public:
         cabeza = nuevo;
         cout << "Proceso insertado exitosamente.\n";
     }
+
+    void eliminar(int id) {
+        if (cabeza == NULL) {
+            cout << "No hay procesos para eliminar.\n";
+            return;
+        }
+        
+        Proceso* actual = cabeza;
+        Proceso* anterior = NULL;
+        
+        while (actual != NULL) {
+            if (actual->id == id) {
+                if (anterior == NULL) {
+                    cabeza = actual->siguiente;
+                } else {
+                    anterior->siguiente = actual->siguiente;
+                }
+                delete actual;
+                cout << "Proceso con ID " << id << " eliminado exitosamente.\n";
+                return;
+            }
+            anterior = actual;
+            actual = actual->siguiente;
+        }
+        cout << "Proceso con ID " << id << " no encontrado.\n";
+    }
+
+    Proceso* buscar(int id) {
+        Proceso* actual = cabeza;
+        while (actual != NULL) {
+            if (actual->id == id)
+                return actual;
+            actual = actual->siguiente;
+        }
+        return NULL;
+    }
+
+    Proceso* buscar(const string& nombre) {
+        Proceso* actual = cabeza;
+        while (actual != NULL) {
+            if (actual->nombre == nombre)
+                return actual;
+            actual = actual->siguiente;
+        }
+        return NULL;
+    }
+
+    void modificarPrioridad(int id, int nuevaPrioridad) {
+        if (nuevaPrioridad < 1 || nuevaPrioridad > 10) {
+            cout << "Error: La prioridad debe estar entre 1 y 10.\n";
+            return;
+        }
+        
+        Proceso* p = buscar(id);
+        if (p != NULL) {
+            int prioridadAnterior = p->prioridad;
+            p->prioridad = nuevaPrioridad;
+            cout << "Prioridad del proceso ID " << id << " modificada de " 
+                 << prioridadAnterior << " a " << nuevaPrioridad << ".\n";
+        } else {
+            cout << "Proceso con ID " << id << " no encontrado.\n";
+        }
+    }
