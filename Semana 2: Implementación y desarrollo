@@ -268,4 +268,64 @@ case 3: {
                 gestor.mostrarProcesos();
                 break;
             }
+           }
+            case 6: {
+                int id;
+                cout << "\n--- Encolar Proceso ---\n";
+                cout << "ID del proceso a encolar: ";
+                cin >> id;
+                Proceso* p = gestor.buscar(id);
+                if (p != NULL) {
+                    planificador.encolar(p);
+                } else {
+                    cout << "Proceso con ID " << id << " no encontrado.\n";
+                }
+                break;
+            }
+            case 7: {
+                cout << "\n--- Ejecutar Proceso ---\n";
+                planificador.ejecutar();
+                break;
+            }
+            case 8: {
+                cout << "\n--- Cola de Ejecución ---\n";
+                planificador.mostrarCola();
+                break;
+            }
+            case 9: {
+                cout << "\n--- Asignar Memoria ---\n";
+                memoria.asignarMemoria();
+                break;
+            }
+            case 10: {
+                cout << "\n--- Liberar Memoria ---\n";
+                memoria.liberarMemoria();
+                break;
+            }
+            case 11: {
+                cout << "\n--- Estado de Memoria ---\n";
+                memoria.mostrarEstado();
+                break;
+            }
+            case 0: {
+                cout << "\n¡Gracias por usar el Simulador de Sistema Operativo!\n";
+                cout << "Saliendo del programa...\n";
+                break;
+            }
+            default: {
+                cout << "\nOpción inválida. Por favor seleccione una opción del 0 al 11.\n";
+                break;
+            }
+        }
+        
+        // Pausa para que el usuario pueda ver el resultado
+        if (opcion != 0) {
+            cout << "\nPresione Enter para continuar...";
+            cin.ignore();
+            cin.get();
+        }
+        
+    } while(opcion != 0);
 
+    return 0;
+}
