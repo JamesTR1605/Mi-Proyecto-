@@ -216,4 +216,56 @@ int main() {
                 gestor.eliminar(id);
                 break;
             }
+case 3: {
+                int opcionBusqueda;
+                cout << "\n--- Buscar Proceso ---\n";
+                cout << "1. Buscar por ID\n";
+                cout << "2. Buscar por nombre\n";
+                cout << "Seleccione opción: ";
+                cin >> opcionBusqueda;
+                
+                if (opcionBusqueda == 1) {
+                    int id;
+                    cout << "ID del proceso: ";
+                    cin >> id;
+                    Proceso* p = gestor.buscar(id);
+                    if (p != NULL) {
+                        cout << "Proceso encontrado:\n";
+                        cout << "ID: " << p->id << ", Nombre: " << p->nombre 
+                             << ", Prioridad: " << p->prioridad << endl;
+                    } else {
+                        cout << "Proceso no encontrado.\n";
+                    }
+                } else if (opcionBusqueda == 2) {
+                    string nombre;
+                    cout << "Nombre del proceso: ";
+                    cin >> nombre;
+                    Proceso* p = gestor.buscar(nombre);
+                    if (p != NULL) {
+                        cout << "Proceso encontrado:\n";
+                        cout << "ID: " << p->id << ", Nombre: " << p->nombre 
+                             << ", Prioridad: " << p->prioridad << endl;
+                    } else {
+                        cout << "Proceso no encontrado.\n";
+                    }
+                } else {
+                    cout << "Opción inválida.\n";
+                }
+                break;
+            }
+            case 4: {
+                int id, nuevaPrioridad;
+                cout << "\n--- Modificar Prioridad ---\n";
+                cout << "ID del proceso: ";
+                cin >> id;
+                cout << "Nueva prioridad (1-10): ";
+                cin >> nuevaPrioridad;
+                gestor.modificarPrioridad(id, nuevaPrioridad);
+                break;
+            }
+            case 5: {
+                cout << "\n--- Lista de Procesos ---\n";
+                gestor.mostrarProcesos();
+                break;
+            }
 
