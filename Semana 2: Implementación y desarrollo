@@ -109,3 +109,36 @@ public:
             cout << "Proceso con ID " << id << " no encontrado.\n";
         }
     }
+
+// Gestor de Memoria con pila
+class GestorMemoria {
+private:
+    stack<int> pilaMemoria;
+    int contador;
+    static const int MAX_BLOQUES = 100; // Límite máximo de bloques
+
+public:
+    GestorMemoria() : contador(0) {}
+
+    void asignarMemoria() {
+        if (contador >= MAX_BLOQUES) {
+            cout << "Error: Se ha alcanzado el límite máximo de bloques de memoria ("
+                 << MAX_BLOQUES << ").\n";
+            return;
+        }
+        
+        ++contador;
+        pilaMemoria.push(contador);
+        cout << "Bloque de memoria #" << contador << " asignado exitosamente.\n";
+    }
+
+    void liberarMemoria() {
+        if (pilaMemoria.empty()) {
+            cout << "No hay bloques de memoria asignados para liberar.\n";
+            return;
+        }
+        
+        int bloqueLiberated = pilaMemoria.top();
+        pilaMemoria.pop();
+        cout << "Bloque de memoria #" << bloqueLiberated << " liberado exitosamente.\n";
+    }
