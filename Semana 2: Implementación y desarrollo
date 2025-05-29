@@ -73,6 +73,15 @@ public:
         cout << "Proceso con ID " << id << " no encontrado.\n";
     }
 
+    Proceso* buscar(int id) {
+        Proceso* actual = cabeza;
+        while (actual != NULL) {
+            if (actual->id == id)
+                return actual;
+            actual = actual->siguiente;
+        }
+        return NULL;
+    }
 
     Proceso* buscar(const string& nombre) {
         Proceso* actual = cabeza;
@@ -98,8 +107,8 @@ public:
                  << prioridadAnterior << " a " << nuevaPrioridad << ".\n";
         } else {
             cout << "Proceso con ID " << id << " no encontrado.\n";
-        }
-    }
+        }
+    }
 void mostrarProcesos() {
         if (cabeza == NULL) {
             cout << "\nNo hay procesos registrados.\n";
