@@ -11,7 +11,7 @@ struct Proceso {
     int prioridad;
     Proceso* siguiente;
     
-    // Constructor para facilitar la creación
+    // Constructor para facilitar la creaciÃ³n
     Proceso(int _id, string _nombre, int _prioridad) 
         : id(_id), nombre(_nombre), prioridad(_prioridad), siguiente(NULL) {}
 };
@@ -180,7 +180,7 @@ public:
         
         size++;
         cout << "Proceso '" << p->nombre << "' (ID: " << p->id 
-             << ") encolado para ejecución.\n";
+             << ") encolado para ejecuciÃ³n.\n";
     }
 
     void ejecutar() {
@@ -202,7 +202,7 @@ public:
 
     void mostrarCola() {
         if (cabeza == NULL) {
-            cout << "\nLa cola de procesos está vacía.\n";
+            cout << "\nLa cola de procesos estÃ¡ vacÃ­a.\n";
             return;
         }
         
@@ -232,14 +232,14 @@ class GestorMemoria {
 private:
     stack<int> pilaMemoria;
     int contador;
-    static const int MAX_BLOQUES = 100; // Límite máximo de bloques
+    static const int MAX_BLOQUES = 100; // LÃ­mite mÃ¡ximo de bloques
 
 public:
     GestorMemoria() : contador(0) {}
 
     void asignarMemoria() {
         if (contador >= MAX_BLOQUES) {
-            cout << "Error: Se ha alcanzado el límite máximo de bloques de memoria ("
+            cout << "Error: Se ha alcanzado el lÃ­mite mÃ¡ximo de bloques de memoria ("
                  << MAX_BLOQUES << ").\n";
             return;
         }
@@ -268,7 +268,7 @@ public:
         
         stack<int> temp = pilaMemoria;
         cout << "\n=== Estado actual de la memoria ===\n";
-        cout << "Bloques asignados (del más reciente al más antiguo):\n";
+        cout << "Bloques asignados (del mÃ¡s reciente al mÃ¡s antiguo):\n";
         while (!temp.empty()) {
             cout << "Bloque #" << temp.top() << endl;
             temp.pop();
@@ -282,7 +282,7 @@ public:
     }
 };
 
-// Función para mostrar menú
+// FunciÃ³n para mostrar menÃº
 void mostrarMenu() {
     cout << "\n========== SIMULADOR DE SISTEMA OPERATIVO ==========\n";
     cout << "1. Insertar proceso\n";
@@ -290,15 +290,15 @@ void mostrarMenu() {
     cout << "3. Buscar proceso\n";
     cout << "4. Modificar prioridad\n";
     cout << "5. Mostrar todos los procesos\n";
-    cout << "6. Encolar proceso para ejecución\n";
+    cout << "6. Encolar proceso para ejecuciÃ³n\n";
     cout << "7. Ejecutar proceso\n";
-    cout << "8. Mostrar cola de ejecución\n";
+    cout << "8. Mostrar cola de ejecuciÃ³n\n";
     cout << "9. Asignar memoria\n";
     cout << "10. Liberar memoria\n";
     cout << "11. Mostrar estado de memoria\n";
     cout << "0. Salir\n";
     cout << "===================================================\n";
-    cout << "Seleccione una opción: ";
+    cout << "Seleccione una opciÃ³n: ";
 }
 
 int main() {
@@ -338,7 +338,7 @@ int main() {
                 cout << "\n--- Buscar Proceso ---\n";
                 cout << "1. Buscar por ID\n";
                 cout << "2. Buscar por nombre\n";
-                cout << "Seleccione opción: ";
+                cout << "Seleccione opciÃ³n: ";
                 cin >> opcionBusqueda;
                 
                 if (opcionBusqueda == 1) {
@@ -366,7 +366,7 @@ int main() {
                         cout << "Proceso no encontrado.\n";
                     }
                 } else {
-                    cout << "Opción inválida.\n";
+                    cout << "OpciÃ³n invÃ¡lida.\n";
                 }
                 break;
             }
@@ -404,7 +404,7 @@ int main() {
                 break;
             }
             case 8: {
-                cout << "\n--- Cola de Ejecución ---\n";
+                cout << "\n--- Cola de EjecuciÃ³n ---\n";
                 planificador.mostrarCola();
                 break;
             }
@@ -424,12 +424,12 @@ int main() {
                 break;
             }
             case 0: {
-                cout << "\n¡Gracias por usar el Simulador de Sistema Operativo!\n";
+                cout << "\nÂ¡Gracias por usar el Simulador de Sistema Operativo!\n";
                 cout << "Saliendo del programa...\n";
                 break;
             }
             default: {
-                cout << "\nOpción inválida. Por favor seleccione una opción del 0 al 11.\n";
+                cout << "\nOpciÃ³n invÃ¡lida. Por favor seleccione una opciÃ³n del 0 al 11.\n";
                 break;
             }
         }
