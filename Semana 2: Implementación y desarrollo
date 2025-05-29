@@ -107,9 +107,10 @@ public:
                  << prioridadAnterior << " a " << nuevaPrioridad << ".\n";
         } else {
             cout << "Proceso con ID " << id << " no encontrado.\n";
-        }
-    }
-void mostrarProcesos() {
+        }
+    }
+
+    void mostrarProcesos() {
         if (cabeza == NULL) {
             cout << "\nNo hay procesos registrados.\n";
             return;
@@ -222,9 +223,10 @@ public:
     }
     
     int tamanio() const {
-        return size;
-    }
+        return size;
+    }
 };
+
 // Gestor de Memoria con pila
 class GestorMemoria {
 private:
@@ -258,7 +260,7 @@ public:
         cout << "Bloque de memoria #" << bloqueLiberated << " liberado exitosamente.\n";
     }
 
- void mostrarEstado() {
+    void mostrarEstado() {
         if (pilaMemoria.empty()) {
             cout << "\nNo hay bloques de memoria asignados.\n";
             return;
@@ -331,7 +333,7 @@ int main() {
                 gestor.eliminar(id);
                 break;
             }
-case 3: {
+            case 3: {
                 int opcionBusqueda;
                 cout << "\n--- Buscar Proceso ---\n";
                 cout << "1. Buscar por ID\n";
@@ -383,7 +385,6 @@ case 3: {
                 gestor.mostrarProcesos();
                 break;
             }
-           }
             case 6: {
                 int id;
                 cout << "\n--- Encolar Proceso ---\n";
