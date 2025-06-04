@@ -126,3 +126,42 @@ public:
         }
         return NULL;
     }
+
+    void modificarPrioridad(int id, int nuevaPrioridad) {
+        if (nuevaPrioridad < 1 || nuevaPrioridad > 10) {
+            cout << "Error: La prioridad debe estar entre 1 y 10.\n";
+            return;
+        }
+        
+        Proceso* p = buscar(id);
+        if (p != NULL) {
+            int prioridadAnterior = p->prioridad;
+            p->prioridad = nuevaPrioridad;
+            cout << "Prioridad del proceso ID " << id << " modificada de " 
+                 << prioridadAnterior << " a " << nuevaPrioridad << ".\n";
+        } else {
+            cout << "Proceso con ID " << id << " no encontrado.\n";
+        }
+    }
+
+    void mostrarProcesos() {
+        if (cabeza == NULL) {
+            cout << "\nNo hay procesos registrados.\n";
+            return;
+        }
+        
+        Proceso* actual = cabeza;
+        cout << "\n=== Lista de procesos ===\n";
+        while (actual != NULL) {
+            cout << "ID: " << actual->id 
+                 << ", Nombre: " << actual->nombre 
+                 << ", Prioridad: " << actual->prioridad << endl;
+            actual = actual->siguiente;
+        }
+        cout << "========================\n";
+    }
+    
+    bool estaVacio() const {
+        return cabeza == NULL;
+    }
+};
