@@ -222,3 +222,154 @@ public:
             cout << "No hay procesos en cola para ejecutar.\n";
             return;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    void mostrarEstado() {
+        if (cabeza == NULL) {
+            cout << "\nNo hay bloques de memoria asignados.\n";
+            return;
+        }
+        
+        cout << "\n=== Estado actual de la memoria ===\n";
+        cout << "Bloques asignados (del más reciente al más antiguo):\n";
+        
+        BloqueMemoria* actual = cabeza;
+        while (actual != NULL) {
+            cout << "Bloque #" << actual->id << endl;
+            actual = actual->siguiente;
+        }
+        
+        cout << "Total de bloques asignados: " << totalBloques << endl;
+        cout << "==================================\n";
+    }
+    
+    int bloquesAsignados() const {
+        return totalBloques;
+    }
+};
+
+// Función para mostrar menú
+void mostrarMenu() {
+    cout << "\n========== SIMULADOR DE SISTEMA OPERATIVO ==========\n";
+    cout << "1. Insertar proceso\n";
+    cout << "2. Eliminar proceso\n";
+    cout << "3. Buscar proceso\n";
+    cout << "4. Modificar prioridad\n";
+    cout << "5. Mostrar todos los procesos\n";
+    cout << "6. Encolar proceso para ejecucion\n";
+    cout << "7. Ejecutar proceso\n";
+    cout << "8. Mostrar cola de ejecucion\n";
+    cout << "9. Asignar memoria\n";
+    cout << "10. Liberar memoria\n";
+    cout << "11. Mostrar estado de memoria\n";
+    cout << "0. Salir\n";
+    cout << "===================================================\n";
+    cout << "Seleccione una opcion: ";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
