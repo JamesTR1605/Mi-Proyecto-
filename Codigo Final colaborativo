@@ -165,3 +165,60 @@ public:
         return cabeza == NULL;
     }
 };
+
+// Planificador de CPU con cola personalizada ordenada por prioridad
+class PlanificadorCPU {
+private:
+    struct NodoCola {
+        Proceso* proceso;
+        NodoCola* siguiente;
+        
+        NodoCola(Proceso* p) : proceso(p), siguiente(NULL) {}
+    };
+    
+    NodoCola* cabeza;
+    int size;
+
+public:
+    PlanificadorCPU() : cabeza(NULL), size(0) {}
+    
+    ~PlanificadorCPU() {
+        while (cabeza != NULL) {
+            NodoCola* temp = cabeza;
+            cabeza = cabeza->siguiente;
+            delete temp;
+        }
+    }
+
+    void encolar(Proceso* p) {
+        if (p == NULL) {
+            cout << "Error: No se puede encolar un proceso nulo.\n";
+            return;
+        }
+        
+        NodoCola* nuevo = new NodoCola(p);
+        
+        // Insertar ordenado por prioridad (mayor prioridad primero)
+        if (cabeza == NULL || p->prioridad > cabeza->proceso->prioridad) {
+            nuevo->siguiente = cabeza;
+            cabeza = nuevo;
+        } else {
+            NodoCola* actual = cabeza;
+            while (actual->siguiente != NULL && 
+                   actual->siguiente->proceso->prioridad >= p->prioridad) {
+                actual = actual->siguiente;
+            }
+            nuevo->siguiente = actual->siguiente;
+            actual->siguiente = nuevo;
+        }
+        
+        size++;
+        cout << "Proceso '" << p->nombre << "' (ID: " << p->id 
+             << ") encolado para ejecución.\n";
+    }
+
+    void ejecutar() {
+        if (cabeza == NULL) {
+            cout << "No hay procesos en cola para ejecutar.\n";
+            return;
+        }
