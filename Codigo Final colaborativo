@@ -1,1 +1,35 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// Funciones de validación
+int leerEnteroValido(const string& mensaje, int min = INT_MIN, int max = INT_MAX) {
+    int valor;
+    while (true) {
+        cout << mensaje;
+        if (cin >> valor) {
+            if (valor >= min && valor <= max) {
+                return valor;
+            } else {
+                cout << "Error: El valor debe estar entre " << min << " y " << max << ".\n";
+            }
+        } else {
+            cout << "Error: Ingrese un numero valido.\n";
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
+    }
+}
+
+string leerStringNoVacio(const string& mensaje) {
+    string texto;
+    while (true) {
+        cout << mensaje;
+        getline(cin, texto);
+        if (!texto.empty() && texto.find_first_not_of(" \t\n\r") != string::npos) {
+            return texto;
+        }
+        cout << "Error: El texto no puede estar vacio.\n";
+    }
 
