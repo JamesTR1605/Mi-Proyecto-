@@ -361,3 +361,139 @@ void mostrarMenu() {
     cout << "Seleccione una opcion: ";
 }
 
+int main() {
+    GestorProcesos gestor;
+    PlanificadorCPU planificador;
+    GestorMemoria memoria;
+    
+    int opcion;
+    do {
+        mostrarMenu();
+        opcion = leerOpcionMenu(0, 11);
+        
+        switch(opcion) {
+            case 1: {
+                cout << "\n--- Insertar Proceso ---\n";
+                int id = leerEnteroValido("ID del proceso (numero positivo): ", 1, INT_MAX);
+                cin.ignore(); // Limpiar el buffer
+                string nombre = leerStringNoVacio("Nombre del proceso: ");
+                int prioridad = leerEnteroValido("Prioridad (1-10): ", 1, 10);
+                gestor.insertar(id, nombre, prioridad);
+                break;
+            }
+            case 2: {
+                cout << "\n--- Eliminar Proceso ---\n";
+                if (gestor.estaVacio()) {
+                    cout << "No hay procesos para eliminar.\n";
+                    break;
+                }
+                int id = leerEnteroValido("ID del proceso a eliminar: ", 1, INT_MAX);
+                gestor.eliminar(id);
+                break;
+            }
+            case 3: {
+                cout << "\n--- Buscar Proceso ---\n";
+                if (gestor.estaVacio()) {
+                    cout << "No hay procesos registrados para buscar.\n";
+                    break;
+                }
+                int opcionBusqueda = leerEnteroValido("1. Buscar por ID\n2. Buscar por nombre\nSeleccione opcion: ", 1, 2);
+                
+                if (opcionBusqueda == 1) {
+                    int id = leerEnteroValido("ID del proceso: ", 1, INT_MAX);
+                    Proceso* p = gestor.buscar(id);
+                    if (p != NULL) {
+                        cout << "Proceso encontrado:\n";
+                        cout << "ID: " << p->id << ", Nombre: " << p->nombre 
+                             << ", Prioridad: " << p->prioridad << endl;
+                    } else {
+                        cout << "Proceso no encontrado.\n";
+                    }
+                } else {
+                    cin.ignore(); // Limpiar el buffer
+                    string nombre = leerStringNoVacio("Nombre del proceso: ");
+                    Proceso* p = gestor.buscar(nombre);
+                    if (p != NULL) {
+                        cout << "Proceso encontrado:\n";
+                        cout << "ID: " << p->id << ", Nombre: " << p->nombre 
+                             << ", Prioridad: " << p->prioridad << endl;
+                    } else {
+                        cout << "Proceso no encontrado.\n";
+                    }
+                }
+                break;
+            }
+            case 4: {
+                cout << "\n--- Modificar Prioridad ---\n";
+                if (gestor.estaVacio()) {
+                    cout << "No hay procesos registrados para modificar.\n";
+                    break;
+                }
+                int id = leerEnteroValido("ID del proceso: ", 1, INT_MAX);
+                int nuevaPrioridad = leerEnteroValido("Nueva prioridad (1-10): ", 1, 10);
+                gestor.modificarPrioridad(id, nuevaPrioridad);
+                break;
+            }
+            case 5: {
+                cout << "\n--- Lista de Procesos ---\n";
+                gestor.mostrarProcesos();
+                break;
+            }
+            case 6: {
+                cout << "\n--- Encolar Proceso ---\n";
+                if (gestor.estaVacio()) {
+                    cout << "No hay procesos registrados para encolar.\n";
+                    break;
+                }
+                int id = leerEnteroValido("ID del proceso a encolar: ", 1, INT_MAX);
+                Proceso* p = gestor.buscar(id);
+                if (p != NULL) {
+                    planificador.encolar(p);
+                } else {
+                    cout << "Proceso con ID " << id << " no encontrado.\n";
+                }
+                break;
+            }
+            case 7: {
+                cout << "\n--- Ejecutar Proceso ---\n";
+                planificador.ejecutar();
+                break;
+            }
+            case 8: {
+                cout << "\n--- Cola de Ejecucion ---\n";
+                planificador.mostrarCola();
+                break;
+            }
+            case 9: {
+                cout << "\n--- Asignar Memoria ---\n";
+                memoria.asignarMemoria();
+                break;
+            }
+            case 10: {
+                cout << "\n--- Liberar Memoria ---\n";
+                memoria.liberarMemoria();
+                break;
+            }
+            case 11: {
+                cout << "\n--- Estado de Memoria ---\n";
+                memoria.mostrarEstado();
+                break;
+            }
+            case 0: {
+                cout << "\n¡Gracias por usar el Simulador de Sistema Operativo!\n";
+                cout << "Saliendo del programa...\n";
+                break;
+            }
+        }
+        
+        // Pausa para que el usuario pueda ver el resultado
+        if (opcion != 0) {
+            cout << "\nPresione Enter para continuar...";
+            cin.ignore();
+            cin.get();
+        }
+        
+    } while(opcion != 0);
+
+    return 0;
+}
