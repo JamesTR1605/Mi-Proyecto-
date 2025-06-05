@@ -260,6 +260,7 @@ NodoCola* temp = cabeza;
         return size;
     }
 };
+
 // Gestor de Memoria simplificado usando lista enlazada
 class GestorMemoria {
 private:
@@ -315,9 +316,8 @@ public:
         totalBloques--;
         
         cout << "Bloque de memoria #" << bloqueId << " liberado exitosamente.\n";
-    }
+    } 
 
-    
 void mostrarEstado() {
         if (cabeza == NULL) {
             cout << "\nNo hay bloques de memoria asignados.\n";
