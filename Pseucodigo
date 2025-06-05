@@ -1,0 +1,327 @@
+Algoritmo SimuladorSistemaOperativo
+// Declaración de variables globales
+Definir MAX_PROCESOS Como Entero
+MAX_PROCESOS <- 50
+// Arrays para gestión de procesos
+Definir procesoID Como Entero
+Definir procesoNombre Como Cadena
+Definir procesoPrioridad Como Entero
+Definir procesoActivo Como Lógico
+Dimensionar procesoID(MAX_PROCESOS)
+Dimensionar procesoNombre(MAX_PROCESOS)
+Dimensionar procesoPrioridad(MAX_PROCESOS)
+Dimensionar procesoActivo(MAX_PROCESOS)
+// Variables para cola de ejecución
+Definir colaEjecucion Como Entero
+Definir tamanioCola Como Entero
+Dimensionar colaEjecucion(MAX_PROCESOS)
+tamanioCola <- 0
+// Variables para gestión de memoria
+Definir memoriaAsignada Como Lógico
+Definir contadorMemoria Como Entero
+Definir MAX_BLOQUES Como Entero
+MAX_BLOQUES <- 20
+Dimensionar memoriaAsignada(MAX_BLOQUES)
+contadorMemoria <- 0
+// Variables de control
+Definir totalProcesos Como Entero
+Definir opcion Como Entero
+totalProcesos <- 0
+// Inicializar arrays
+Para i<-0 Hasta MAX_PROCESOS-1 Con Paso 1 Hacer
+procesoActivo[i] <- Falso
+FinPara
+Para i<-0 Hasta MAX_BLOQUES-1 Con Paso 1 Hacer
+memoriaAsignada[i] <- Falso
+FinPara
+// Menú principal
+Repetir
+// Mostrar menú
+Escribir '========== SIMULADOR DE SISTEMA OPERATIVO =========='
+Escribir '1. Insertar proceso'
+Escribir '2. Eliminar proceso'
+Escribir '3. Buscar proceso'
+Escribir '4. Modificar prioridad'
+Escribir '5. Mostrar todos los procesos'
+Escribir '6. Encolar proceso para ejecución'
+Escribir '7. Ejecutar proceso'
+Escribir '8. Mostrar cola de ejecución'
+Escribir '9. Asignar memoria'
+Escribir '10. Liberar memoria'
+Escribir '11. Mostrar estado de memoria'
+Escribir '0. Salir'
+Escribir '==================================================='
+Escribir 'Seleccione una opción: 'Sin Saltar
+Leer opcion
+Según opcion Hacer
+1:
+// Insertar proceso
+Escribir '--- Insertar Proceso ---'
+Si totalProcesos>=MAX_PROCESOS Entonces
+Escribir 'Error: Límite máximo de procesos alcanzado.'
+SiNo
+Definir id Como Entero
+Definir nombre Como Cadena
+Definir prioridad Como Entero
+Definir existe Como Lógico
+Escribir 'ID del proceso: 'Sin Saltar
+Leer id
+// Verificar ID único
+existe <- Falso
+Para i<-0 Hasta MAX_PROCESOS-1 Con Paso 1 Hacer
+Si procesoActivo[i] Y procesoID[i]=id Entonces
+existe <- Verdadero
+FinSi
+FinPara
+Si existe Entonces
+Escribir 'Error: ID ya existe'
+SiNo
+Escribir 'Nombre del proceso: 'Sin Saltar
+Leer nombre
+Repetir
+Escribir 'Prioridad (1-10): 'Sin Saltar
+Leer prioridad
+Hasta Que prioridad>=1 Y prioridad<=10
+// Buscar posición libre
+Para i<-0 Hasta MAX_PROCESOS-1 Con Paso 1 Hacer
+Si  NO procesoActivo[i] Entonces
+procesoID[i] <- id
+procesoNombre[i] <- nombre
+procesoPrioridad[i] <- prioridad
+procesoActivo[i] <- Verdadero
+totalProcesos <- totalProcesos+1
+Escribir 'Proceso insertado exitosamente.'
+i <- MAX_PROCESOS
+FinSi // Salir del bucle
+FinPara
+FinSi
+FinSi
+2:
+// Eliminar proceso
+Escribir '--- Eliminar Proceso ---'
+Si totalProcesos=0 Entonces
+Escribir 'No hay procesos para eliminar.'
+SiNo
+Definir id Como Entero
+Definir encontrado Como Lógico
+encontrado <- Falso
+Escribir 'ID del proceso a eliminar: 'Sin Saltar
+Leer id
+Para i<-0 Hasta MAX_PROCESOS-1 Con Paso 1 Hacer
+Si procesoActivo[i] Y procesoID[i]=id Entonces
+procesoActivo[i] <- Falso
+totalProcesos <- totalProcesos-1
+encontrado <- Verdadero
+Escribir 'Proceso eliminado exitosamente.'
+FinSi
+FinPara
+Si  NO encontrado Entonces
+Escribir 'Proceso no encontrado.'
+FinSi
+FinSi
+3:
+// Buscar proceso
+Escribir '--- Buscar Proceso ---'
+Si totalProcesos=0 Entonces
+Escribir 'No hay procesos registrados.'
+SiNo
+Definir id Como Entero
+Definir encontrado Como Lógico
+encontrado <- Falso
+Escribir 'ID del proceso a buscar: 'Sin Saltar
+Leer id
+Para i<-0 Hasta MAX_PROCESOS-1 Con Paso 1 Hacer
+Si procesoActivo[i] Y procesoID[i]=id Entonces
+Escribir 'Proceso encontrado:'
+Escribir 'ID: ', procesoID[i], ' | Nombre: ', procesoNombre[i], ' | Prioridad: ', procesoPrioridad[i]
+encontrado <- Verdadero
+FinSi
+FinPara
+Si  NO encontrado Entonces
+Escribir 'Proceso no encontrado.'
+FinSi
+FinSi
+4:
+// Modificar prioridad
+Escribir '--- Modificar Prioridad ---'
+Si totalProcesos=0 Entonces
+Escribir 'No hay procesos registrados.'
+SiNo
+Definir id Como Entero
+Definir nuevaPrioridad Como Entero
+Definir encontrado Como Lógico
+encontrado <- Falso
+Escribir 'ID del proceso: 'Sin Saltar
+Leer id
+Para i<-0 Hasta MAX_PROCESOS-1 Con Paso 1 Hacer
+Si procesoActivo[i] Y procesoID[i]=id Entonces
+Repetir
+Escribir 'Nueva prioridad (1-10): 'Sin Saltar
+Leer nuevaPrioridad
+Hasta Que nuevaPrioridad>=1 Y nuevaPrioridad<=10
+Escribir 'Prioridad modificada de ', procesoPrioridad[i], ' a ', nuevaPrioridad
+procesoPrioridad[i] <- nuevaPrioridad
+encontrado <- Verdadero
+FinSi
+FinPara
+Si  NO encontrado Entonces
+Escribir 'Proceso no encontrado.'
+FinSi
+FinSi
+5:
+// Mostrar procesos
+Escribir '--- Lista de Procesos ---'
+Si totalProcesos=0 Entonces
+Escribir 'No hay procesos registrados.'
+SiNo
+Escribir '=== Lista de procesos ==='
+Para i<-0 Hasta MAX_PROCESOS-1 Con Paso 1 Hacer
+Si procesoActivo[i] Entonces
+Escribir 'ID: ', procesoID[i], ' | Nombre: ', procesoNombre[i], ' | Prioridad: ', procesoPrioridad[i]
+FinSi
+FinPara
+Escribir '========================'
+FinSi
+6:
+// Encolar proceso
+Escribir '--- Encolar Proceso ---'
+Si totalProcesos=0 Entonces
+Escribir 'No hay procesos registrados.'
+SiNo
+Si tamanioCola>=MAX_PROCESOS Entonces
+Escribir 'Error: Cola llena.'
+SiNo
+Definir id Como Entero
+Definir encontrado Como Lógico
+encontrado <- Falso
+Escribir 'ID del proceso a encolar: 'Sin Saltar
+Leer id
+Para i<-0 Hasta MAX_PROCESOS-1 Con Paso 1 Hacer
+Si procesoActivo[i] Y procesoID[i]=id Entonces
+encontrado <- Verdadero
+// Insertar ordenado por prioridad
+Si tamanioCola=0 Entonces
+colaEjecucion[0] <- i
+tamanioCola <- 1
+SiNo
+Definir pos Como Entero
+pos <- tamanioCola
+Para j<-0 Hasta tamanioCola-1 Con Paso 1 Hacer
+Si procesoPrioridad[i]>procesoPrioridad[colaEjecucion[j]] Entonces
+pos <- j
+j <- tamanioCola
+FinSi // Salir del bucle
+FinPara
+// Mover elementos
+Para j<-tamanioCola Hasta pos+1 Con Paso -1 Hacer
+colaEjecucion[j] <- colaEjecucion[j-1]
+FinPara
+colaEjecucion[pos] <- i
+tamanioCola <- tamanioCola+1
+FinSi
+Escribir 'Proceso encolado exitosamente.'
+FinSi
+FinPara
+Si  NO encontrado Entonces
+Escribir 'Proceso no encontrado.'
+FinSi
+FinSi
+FinSi
+7:
+// Ejecutar proceso
+Escribir '--- Ejecutar Proceso ---'
+Si tamanioCola=0 Entonces
+Escribir 'No hay procesos en cola.'
+SiNo
+Definir indiceProceso Como Entero
+indiceProceso <- colaEjecucion[0]
+Escribir '>>> EJECUTANDO PROCESO <<<'
+Escribir 'ID: ', procesoID[indiceProceso]
+Escribir 'Nombre: ', procesoNombre[indiceProceso]
+Escribir 'Prioridad: ', procesoPrioridad[indiceProceso]
+// Remover de la cola
+Para i<-0 Hasta tamanioCola-2 Con Paso 1 Hacer
+colaEjecucion[i] <- colaEjecucion[i+1]
+FinPara
+tamanioCola <- tamanioCola-1
+FinSi
+8:
+// Mostrar cola
+Escribir '--- Cola de Ejecución ---'
+Si tamanioCola=0 Entonces
+Escribir 'La cola está vacía.'
+SiNo
+Escribir '=== Cola de procesos ==='
+Para i<-0 Hasta tamanioCola-1 Con Paso 1 Hacer
+Definir indice Como Entero
+indice <- colaEjecucion[i]
+Escribir i+1, '. ID: ', procesoID[indice], ' | Nombre: ', procesoNombre[indice], ' | Prioridad: ', procesoPrioridad[indice]
+FinPara
+Escribir '======================='
+FinSi
+9:
+// Asignar memoria
+Escribir '--- Asignar Memoria ---'
+Definir bloqueLibre Como Entero
+bloqueLibre <- -1
+Para i<-0 Hasta MAX_BLOQUES-1 Con Paso 1 Hacer
+Si  NO memoriaAsignada[i] Entonces
+bloqueLibre <- i
+i <- MAX_BLOQUES
+FinSi // Salir del bucle
+FinPara
+Si bloqueLibre=-1 Entonces
+Escribir 'Error: Memoria llena.'
+SiNo
+memoriaAsignada[bloqueLibre] <- Verdadero
+contadorMemoria <- contadorMemoria+1
+Escribir 'Bloque #', bloqueLibre+1, ' asignado.'
+FinSi
+10:
+// Liberar memoria
+Escribir '--- Liberar Memoria ---'
+Si contadorMemoria=0 Entonces
+Escribir 'No hay memoria asignada.'
+SiNo
+Definir bloqueALiberar Como Entero
+bloqueALiberar <- -1
+Para i<-MAX_BLOQUES-1 Hasta 0 Con Paso -1 Hacer
+Si memoriaAsignada[i] Entonces
+bloqueALiberar <- i
+i <- -1
+FinSi // Salir del bucle
+FinPara
+Si bloqueALiberar<>-1 Entonces
+memoriaAsignada[bloqueALiberar] <- Falso
+contadorMemoria <- contadorMemoria-1
+Escribir 'Bloque #', bloqueALiberar+1, ' liberado.'
+FinSi
+FinSi
+11:
+// Mostrar estado memoria
+Escribir '--- Estado de Memoria ---'
+Si contadorMemoria=0 Entonces
+Escribir 'No hay memoria asignada.'
+SiNo
+Escribir '=== Bloques asignados ==='
+Para i<-0 Hasta MAX_BLOQUES-1 Con Paso 1 Hacer
+Si memoriaAsignada[i] Entonces
+Escribir 'Bloque #', i+1
+FinSi
+FinPara
+Escribir 'Total: ', contadorMemoria, ' bloques'
+Escribir '========================'
+FinSi
+0:
+Escribir '¡Gracias por usar el Simulador!'
+Escribir 'Saliendo...'
+De Otro Modo:
+Escribir 'Opción inválida.'
+FinSegún
+Si opcion<>0 Entonces
+Escribir ''
+Escribir 'Presione ENTER para continuar...'
+Esperar Tecla
+FinSi
+Hasta Que opcion=0
+FinAlgoritmo
