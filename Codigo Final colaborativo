@@ -223,7 +223,7 @@ public:
             return;
         }
 
-NodoCola* temp = cabeza;
+        NodoCola* temp = cabeza;
         Proceso* p = temp->proceso;
         cabeza = cabeza->siguiente;
         delete temp;
@@ -260,6 +260,7 @@ NodoCola* temp = cabeza;
         return size;
     }
 };
+
 // Gestor de Memoria simplificado usando lista enlazada
 class GestorMemoria {
 private:
