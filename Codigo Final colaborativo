@@ -223,7 +223,99 @@ public:
             return;
         }
 
+NodoCola* temp = cabeza;
+        Proceso* p = temp->proceso;
+        cabeza = cabeza->siguiente;
+        delete temp;
+        size--;
+        
+        cout << ">>> Ejecutando proceso: ID " << p->id 
+             << ", Nombre: '" << p->nombre 
+             << "', Prioridad: " << p->prioridad << " <<<\n";
+    }
 
+    void mostrarCola() {
+        if (cabeza == NULL) {
+            cout << "\nLa cola de procesos está vacía.\n";
+            return;
+        }
+        
+        NodoCola* actual = cabeza;
+        cout << "\n=== Cola de procesos (por prioridad) ===\n";
+        int posicion = 1;
+        while (actual != NULL) {
+            cout << posicion++ << ". ID: " << actual->proceso->id 
+                 << ", Nombre: '" << actual->proceso->nombre 
+                 << "', Prioridad: " << actual->proceso->prioridad << endl;
+            actual = actual->siguiente;
+        }
+        cout << "=======================================\n";
+    }
+    
+    bool estaVacia() const {
+        return cabeza == NULL;
+    }
+    
+    int tamanio() const {
+        return size;
+    }
+};
+// Gestor de Memoria simplificado usando lista enlazada
+class GestorMemoria {
+private:
+    struct BloqueMemoria {
+        int id;
+        BloqueMemoria* siguiente;
+        
+        BloqueMemoria(int _id) : id(_id), siguiente(NULL) {}
+    };
+    
+    BloqueMemoria* cabeza;
+    int contador;
+    int totalBloques;
+    static const int MAX_BLOQUES = 100;
+
+public:
+    GestorMemoria() : cabeza(NULL), contador(0), totalBloques(0) {}
+    
+    ~GestorMemoria() {
+        while (cabeza != NULL) {
+            BloqueMemoria* temp = cabeza;
+            cabeza = cabeza->siguiente;
+            delete temp;
+        }
+    }
+
+    void asignarMemoria() {
+        if (totalBloques >= MAX_BLOQUES) {
+            cout << "Error: Se ha alcanzado el límite máximo de bloques de memoria ("
+                 << MAX_BLOQUES << ").\n";
+            return;
+        }
+        
+        ++contador;
+        BloqueMemoria* nuevo = new BloqueMemoria(contador);
+        nuevo->siguiente = cabeza;
+        cabeza = nuevo;
+        totalBloques++;
+        
+        cout << "Bloque de memoria #" << contador << " asignado exitosamente.\n";
+    }
+
+    void liberarMemoria() {
+        if (cabeza == NULL) {
+            cout << "No hay bloques de memoria asignados para liberar.\n";
+            return;
+        }
+        
+        BloqueMemoria* temp = cabeza;
+        int bloqueId = temp->id;
+        cabeza = cabeza->siguiente;
+        delete temp;
+        totalBloques--;
+        
+        cout << "Bloque de memoria #" << bloqueId << " liberado exitosamente.\n";
+    }
 
 
 
